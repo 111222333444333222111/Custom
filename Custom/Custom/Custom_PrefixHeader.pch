@@ -1,0 +1,183 @@
+//
+//  Custom-PrefixHeader.pch
+//  Custom
+//
+//  Created by 李飞恒 on 16/3/17.
+//  Copyright © 2016年 李飞恒. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+#define kWidth ([UIScreen mainScreen].bounds.size.width)
+#define kCentreX ([UIScreen mainScreen].bounds.size.width * 0.5)
+#define kHeight ([UIScreen mainScreen].bounds.size.height)
+#define kCentreY ([UIScreen mainScreen].bounds.size.height * 0.5)
+
+/** 屏宽几份之? */
+#define kWidthPercent(s) kWidth/(s)
+/** 屏高的几份之? */
+#define kHeightPercent(s) KHeight/(s)
+/** 获取一个从[0,s]的随机数 */
+#define kRandom(s) (arc4random()%(s))
+/** 获取一个随机数范围在：[500,1000），包括500，包括1000 */
+#define kRandomes(t,m) (arc4random() % t) + m
+/** 旋转屏幕方向 */
+#define kApplicationUIInterfaceOrientation(landscape) [[UIApplication sharedApplication] setStatusBarOrientation:landscape animated:YES];
+
+#pragma mark - 默认背景颜色 ----------------
+#define kVE_BG_Color [UIColor colorWithRed:0.956 green:0.96 blue:0.976 alpha:1]
+
+
+#pragma mark - 系统相关 ----------------
+/** 当前系统版本号 */
+#define kVE_SysVersion			[UIDevice currentDevice].systemVersion
+//当前系统版本 等于([UIDevice currentDevice].systemVersion)
+#define kVE_iOSVersion			[[[NSBundle mainBundle] infoDictionary] objectForKey:@"DTPlatformVersion"]
+/** eg: @"iOS" */
+#define kVE_SysName			[UIDevice currentDevice].systemName
+/** eg: @"iPhone", @"iPod touch" */
+#define kVE_DeviceType			[UIDevice currentDevice].model
+/** 用户系统名称 eg: @"jerry的iPhone6" */
+#define kVE_DeviceName			[UIDevice currentDevice].name
+/** 用户设备的UUID */
+#define kVE_DeviceUUID			[[UIDevice currentDevice].identifierForVendor UUIDString]
+/** 本地化版本模型 */
+#define kVE_LocalizedModel		[UIDevice currentDevice].localizedModel
+//获取当前系统语言
+#define kVE_SysLanguage ([[NSLocale preferredLanguages] objectAtIndex:0])
+//获取应用BundleIdentifier
+#define kVE_BundleIdentifier [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"]
+//获取应用版本号
+#define kVE_AppVersion [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
+//获取应用名称
+#define kVE_AppName [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]
+//最低系统版本要求
+#define kVE_MinimumOSVersion [[[NSBundle mainBundle] infoDictionary] objectForKey:@"MinimumOSVersion"]
+//获取项目版本Build号
+#define kVE_BuildVersion [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleVersionKey];
+//APP地址路径
+#define kVE_AppPath [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleInfoPlistURL"]
+//NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+
+
+#pragma mark - UIWindow / UIApplication  ----------------
+#define kVE_Window [UIApplication sharedApplication].keyWindow
+#define kVE_AppDelegate (AppDelegate *)[UIApplication sharedApplication].delegate
+
+
+#pragma mark - 国际化  ----------------
+//本地化,引用国际化的文件
+#define kVE_NSLogString(x , ...) NSLocalizedString(x, __VA_ARGS__)
+
+
+#pragma mark - 内存相关  ----------------
+#define kVE_Release(obj) if(obj){obj = nil;}
+
+#pragma mark - 快速创建属性 ----------------
+#pragma mark - 线程不安全
+#define __VE_PROPERTY_NO_COPY__(type, object)   @property(nonatomic, copy)type      object
+#define __VE_PROPERTY_NO_ASSIGN__(type, object) @property(nonatomic, assign)type    object
+
+#define __VE_PROPERTY_NO(type, object) @property(nonatomic)type object
+
+#define __VE_PROPERTY_NO_STRONG__(type, object) @property(nonatomic,strong)type object
+#define __VE_PROPERTY_NO_WEAK__(type, object)   @property(nonatomic,weak)type   object
+
+#pragma mark - 线程安全  ----------------
+#define __VE_PROPERTY_AT_COPY__(type, object)   @property(atomic,copy)type      object
+#define __VE_PROPERTY_AT_ASSIGN__(type, object) @property(atomic,assign)type    object
+#define __VE_PROPERTY_AT_STRONG__(type, object) @property(atomic,strong)type    object
+#define __VE_PROPERTY_AT_WEAK__(type, object)   @property(atomic,weak)type   object
+
+#pragma mark - 只读(线程不安全)  ----------------
+#define __VE_PROPERTY_READONLY__NO_COPY__(type, object)   @property(nonatomic,copy,readonly)type   object
+#define __VE_PROPERTY_READONLY__NO_ASSIGN__(type, object) @property(nonatomic,assign,readonly)type object
+#define __VE_PROPERTY_READONLY__NO_STRONG__(type, object) @property(nonatomic,strong,readonly)type object
+#define __VE_PROPERTY_READONLY__NO_WEAK__(type, object)   @property(nonatomic,weak,readonly)type   object
+
+#pragma mark - 只读(线程安全)  ----------------
+#define __VE_PROPERTY_READONLY__AT_COPY__(type, object)   @property(atomic,copy,readonly)type      object
+#define __VE_PROPERTY_READONLY__AT_ASSIGN__(type, object) @property(atomic,assign,readonly)type    object
+#define __VE_PROPERTY_READONLY__AT_STRONG__(type, object) @property(atomic,strong,readonly)type    object
+#define __VE_PROPERTY_READONLY__AT_WEAK__(type, object)   @property(atomic,weak,readonly)type      object
+
+#pragma mark - 定义这个宏方便在block中使用self指针  ----------------
+#define __VE_BLOCK__WEAK__SELF__(type) __weak __typeof(type) weakSelf = type
+#define __VE_BLOCK_STRONG_TO_WEAK_SELF__(strongType) __strong __typeof(strongType) strongSelf = strongType
+
+
+
+#pragma mark - 快速创建对象 ----------------
+/** 创建UIImage */
+#define kVE_UIImageNamed(_imageName) [UIImage imageNamed:_imageName]
+/** 创建UIView类型对象 */
+#define kVE_UIViewInitWith(UIViewType,CGRect) [[UIViewType alloc] initWithFrame:CGRect]
+/** 创建UIAlertView 只有取消Button */
+#define kVE_UIAlertViewOne(title,mess,canelTitle) kVE_UIAlertViewInitWith(title,mess,obj,canelTitle,nil)
+/** 创建UIAlertView */
+#define kVE_UIAlertViewInitWith(title,mess,obj,canelTitle,otherTitle) [[[UIAlertView alloc] initWithTitle:@"" message:mess delegate:obj cancelButtonTitle:canelTitle otherButtonTitles:otherTitle, nil] show]
+/** 创建UIWindow 背景色(白色) */
+#define kVE_UIWindowRootViewController(rootVC) self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];\
+self.window.rootViewController = rootVC;\
+self.window.backgroundColor = [UIColor whiteColor];\
+[self.window makeKeyAndVisible];
+/** 创建UITableView */
+#define kVE_UITableViewInitWith(CGRect,UITableViewStyle) [[UITableView alloc] initWithFrame:(CGRect) style:(UITableViewStyle)]
+/** 创建UIButton */
+#define kVE_UIButton(but) [but buttonWithType:(UIButtonTypeCustom)]
+/** 创建UILabel */
+#define kVE_UILabel(lab, rect) [[lab alloc] initWithFrame:rect]
+
+
+#pragma mark - 懒加载 ----------------
+#define __VE_OBJC_GETTER__START__(type,object) - (type)object {
+#define __VE_OBJC_GETTER__END__(object)  return object;}
+
+#define __VE_OBJC_GETTER__GETArrayWith(type,object) -(type)object{\
+if(!_##object){\
+_##object = [type array];\
+}\
+return _##object;\
+}
+
+
+#pragma mark - push/pop/dismis/present ----------------
+#define kVE_PusthViewController(viewController, anima)  [self.navigationController pushViewController:viewController animated:anima]
+
+#define kVE_PopViewControllerAnimated(animated) [self.navigationController popViewControllerAnimated:animated]
+
+#define kVE_DismissViewController(animated, completionBlock) [self dismissViewControllerAnimated:animated completion:completionBlock]
+
+#define kVE_PresentViewController(viewController, animated, completionBlock) [self presentViewController:viewController animated:animated completion:completionBlock]
+
+#pragma mark - 字体 ----------------
+//方正黑体简体字体定义
+#define kVE_Font(fon) [UIFont fontWithName:@"FZHTJW--GB1-0" size:fon]
+
+
+#pragma mark - 多线程简化 ----------------
+#define kVE_GCD_Async(block) dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), block)
+#define kVE_GCD_Main(block) dispatch_async(dispatch_get_main_queue(),block)
+
+
+#pragma mark - 通知 ----------------
+//接收通知
+#define kVE_NotificationCenterAddObserver(serverObj, action, addNotfationName, obj) [[NSNotificationCenter defaultCenter] addObserver:serverObj selector:action name:addNotfationName object:obj]
+/** 发送通知 */
+#define kVE_NotificationCenterPost(notificationName, postObj, info) [[NSNotificationCenter defaultCenter] postNotificationName:(NSString *)notificationName object:postObj userInfo:info]
+
+
+#pragma mark - 过期提醒 ----------------
+//需要给用户提醒的话,例子：kDeprecated("此方法已经过期")
+#define kVE_Deprecated(_iosIntro, _iosDep, ...) NS_DEPRECATED(2_0, 2_0, 2_0, intro, instead, __VA_ARGS__)
+
+
+
+
+
+#ifdef DEBUG
+#define kVE_NSLog(args...) VE_NSLog(__FILE__,__LINE__,__PRETTY_FUNCTION__,args);
+#else
+#define NSLog(x...)
+#endif
